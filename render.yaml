@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: django-web
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn notes_project.wsgi
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: your-database-name
+          property: connectionString
+    autoDeploy: true
